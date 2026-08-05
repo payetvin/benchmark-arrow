@@ -3,3 +3,4 @@ vcpkg/
 *.parquet
 results.csv
 compile_commands.json
+.cache
