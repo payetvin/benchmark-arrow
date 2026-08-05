@@ -1,0 +1,12 @@
+{
+  "name": "benchmark-arrow",
+  "version-string": "0.1.0",
+  "dependencies": [
+    {
+      "name": "arrow",
+      "features": [
+        "parquet"
+      ]
+    }
+  ]
+}
