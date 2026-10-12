@@ -1,5 +1,6 @@
 #include "generate.h"
 
+#include <arrow/type_fwd.h>
 #include <cmath>
 #include <cstdio>
 #include <limits>
@@ -74,12 +75,12 @@ std::shared_ptr<arrow::Table> generateTable(const Options& opts)
     const auto& statuses = basisStatuses();
 
     arrow::UInt32Builder block_b;
-    arrow::StringBuilder component_b;
-    arrow::StringBuilder output_b;
+    arrow::LargeStringBuilder component_b;
+    arrow::LargeStringBuilder output_b;
     arrow::UInt32Builder absolute_b;
     arrow::UInt32Builder block_time_b;
     arrow::DoubleBuilder value_b;
-    arrow::StringBuilder basis_b;
+    arrow::LargeStringBuilder basis_b;
 
     throwOnError(block_b.Reserve(static_cast<int64_t>(rows)));
     throwOnError(component_b.Reserve(static_cast<int64_t>(rows)));
@@ -119,12 +120,12 @@ std::shared_ptr<arrow::Table> generateTable(const Options& opts)
 
     auto schema = arrow::schema({
         arrow::field("block", arrow::uint32()),
-        arrow::field("component", arrow::utf8()),
-        arrow::field("output", arrow::utf8()),
+        arrow::field("component", arrow::large_utf8()),
+        arrow::field("output", arrow::large_utf8()),
         arrow::field("absolute_time_index", arrow::uint32()),
         arrow::field("block_time_index", arrow::uint32()),
         arrow::field("value", arrow::float64()),
-        arrow::field("basis_status", arrow::utf8()),
+        arrow::field("basis_status", arrow::large_utf8()),
     });
 
     auto columns = arrow::ArrayVector{
